@@ -1,15 +1,9 @@
 import mediapipe as mp
-import tkinter as tk
 import numpy as np
 import cv2, os
 
 mp_drawing = mp.solutions.drawing_utils
 mp_holistic = mp.solutions.holistic
-
-#make a window to display coordinates
-window = tk.Tk()
-window.title("Coordinates")
-window.geometry("500x500")
 
 def mediapipe_detection(showimage, results):
 
@@ -52,10 +46,6 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
             print("                     x: ", x)
             print("                     y: ", y)
             print("                     z: ", z)
-            #show coordinates in window
-            label = tk.Label(window, text="Right Hand: showimage          x: " + str(x) + "showimage          y: " + str(y) + "showimage          z: " + str(z))
-            label.pack()
-            window.update()
         except: pass
         try: 
             x = results.left_hand_landmarks.landmark.x
@@ -65,11 +55,6 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
             print("                     x: ", x)
             print("                     y: ", y)
             print("                     z: ", z)
-            with open("coordinates.txt", "w") as f:
-                f.write("x: " + str(x) + "y: " + str(y) + "z: " + str(z))
-            label2 = tk.Label(window, text="Left Hand: showimage          x: " + str(x) + "showimage          y: " + str(y) + "showimage          z: " + str(z))
-            label2.pack()
-            window.update()
         except: pass
         try: 
             x = results.pose_landmarks.landmark.x
@@ -79,9 +64,6 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
             print("                     x: ", x)
             print("                     y: ", y)
             print("                     z: ", z)
-            label3 = tk.Label(window, text="Pose:          x: " + str(x) + "         y: " + str(y) + "          z: " + str(z))
-            label3.pack()
-            window.update()
         except: pass
 
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
@@ -89,11 +71,9 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
         image = mediapipe_detection(image, results)
 
         cv2.imshow('Camera', image)
-        window.update()
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
-window.destroy()
 cap.release()
 cv2.destroyAllWindows()
