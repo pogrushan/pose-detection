@@ -38,34 +38,6 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
         results = holistic.process(image)
 
-        try: 
-            x = results.right_hand_landmarks.landmark.x
-            y = results.right_hand_landmarks.landmark.y
-            z = results.right_hand_landmarks.landmark.z
-            print('Right hand landmarks: ')
-            print("                     x: ", x)
-            print("                     y: ", y)
-            print("                     z: ", z)
-        except: pass
-        try: 
-            x = results.left_hand_landmarks.landmark.x
-            y = results.left_hand_landmarks.landmark.y
-            z = results.left_hand_landmarks.landmark.z
-            print('Left hand landmarks: ')
-            print("                     x: ", x)
-            print("                     y: ", y)
-            print("                     z: ", z)
-        except: pass
-        try: 
-            x = results.pose_landmarks.landmark.x
-            y = results.pose_landmarks.landmark.y
-            z = results.pose_landmarks.landmark.z
-            print('Pose landmarks: ')
-            print("                     x: ", x)
-            print("                     y: ", y)
-            print("                     z: ", z)
-        except: pass
-
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         
         image = mediapipe_detection(image, results)
